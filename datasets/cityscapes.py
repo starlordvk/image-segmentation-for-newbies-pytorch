@@ -21,13 +21,16 @@ import torchvision.transforms as transforms
 # Torch vision now supports city scapes and allows to easily load the cityscapes dataset
 # by just specifying the directory which has the leftImg8bit and gtFine folders.
 
-tfms = transforms.Compose([transforms.PILToTensor()])
+IMG_HEIGHT = 110  
+IMG_WIDTH = 220
+
+tfms = transforms.Compose([transforms.Resize((IMG_HEIGHT, IMG_WIDTH),interpolation=Image.NEAREST), transforms.PILToTensor()])
 
 trainDataset = torchvision.datasets.Cityscapes('./', split='train', mode='fine',
-                     target_type='color', transform=tfms, target_transform=tfms)
+                     target_type='semantic', transform=tfms, target_transform=tfms)
 
 valDataset = torchvision.datasets.Cityscapes('./', split='val', mode='fine',
-                     target_type='color', transform=tfms, target_transform=tfms)
+                     target_type='semantic', transform=tfms, target_transform=tfms)
 
 testDataset = torchvision.datasets.Cityscapes('./', split='test', mode='fine',
-                     target_type='color', transform=tfms, target_transform=tfms)
+                     target_type='semantic', transform=tfms, target_transform=tfms)
